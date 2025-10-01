@@ -4,12 +4,6 @@ A full-stack **Todo List App** built with **React**, **Express.js**, and **MySQL
 
 ---
 
-## 🌐 Live Demo (Optional)
-
-> 🚧 You can deploy this app using [Render](https://render.com), [Heroku](https://heroku.com), or [Vercel](https://vercel.com) and add the link here.
-
----
-
 ## 🛠️ Tech Stack
 
 **Frontend:**
@@ -33,3 +27,25 @@ A full-stack **Todo List App** built with **React**, **Express.js**, and **MySQL
 
 ## 📁 Project Structure
 
+Todo-app/
+├── backend/ # Express backend
+│ ├── db.js # MySQL connection
+│ ├── routes/ # REST API routes
+│ └── server.js
+├── frontend/ # React frontend
+│ ├── public/ # index.html
+│ ├── src/
+│ │ ├── api/ # Axios API calls
+│ │ ├── App.js
+│ │ └── App.css
+├── docker-compose.yml # Multi-container setup
+├── .env # Environment variables (MySQL)
+└── README.md # This file
+
+** to run the app use :
+
+-docker-compose up --build
+
+Frontend: http://localhost:3000
+Backend API: http://localhost:5000/api/todos
+MySQL: Port 3306
