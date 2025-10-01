@@ -1,0 +1,49 @@
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todo_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./backend/mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - backend_net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: todo-backend
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mysql-db
+    ports:
+      - "5000:5000"
+    networks:
+      - backend_net
+      - frontend_net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: todo-frontend
+    ports:
+      - "3000:80"     # map nginx port 80 to host 3000
+    environment:
+      REACT_APP_API_URL: http://todo-backend:5000
+    depends_on:
+      - backend
+    networks:
+      - frontend_net
+
+networks:
+  backend_net:
+    driver: bridge
+  frontend_net:
+    driver: bridge
+
+volumes:
+  mysql-data:
