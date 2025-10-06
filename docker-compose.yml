@@ -1,4 +1,3 @@
-
 services:
   mysql-db:
     image: mysql:8.0
@@ -11,6 +10,8 @@ services:
       - ./backend/mysql-init:/docker-entrypoint-initdb.d
     networks:
       - backend_net
+    ports:
+      - "3306:3306"
 
   backend:
     build:
@@ -31,13 +32,27 @@ services:
       context: ./frontend
     container_name: todo-frontend
     ports:
-      - "3000:80"     # map nginx port 80 to host 3000
+      - "80:80"
     environment:
       REACT_APP_API_URL: http://todo-backend:5000
     depends_on:
       - backend
     networks:
       - frontend_net
+
+  phpmyadmin:                             
+    image: phpmyadmin:latest
+    container_name: pma
+    environment:
+      PMA_HOST: mysql-db                
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    ports:
+      - "8080:80"                         
+    depends_on:
+      - mysql-db
+    networks:
+      - backend_net
 
 networks:
   backend_net:

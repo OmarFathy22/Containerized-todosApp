@@ -9,7 +9,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Serve with a minimal static server (e.g. serve) — or nginx
 FROM nginx:alpine
 
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
