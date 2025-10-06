@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
-// Get all todos
 router.get('/', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM todos');
@@ -13,7 +12,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create a todo
 router.post('/', async (req, res) => {
   try {
     const { title, is_done } = req.body;
@@ -30,7 +28,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update a todo
 router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -47,7 +44,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a todo
 router.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id;
